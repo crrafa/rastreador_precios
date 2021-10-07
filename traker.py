@@ -6,6 +6,10 @@ url = "https://www.mercadolibre.com.mx/laptop-lenovo-ideapad-14igl05-ice-blue-14
 html =requests.get(url)
 soup = BeautifulSoup(html.content, 'html.parser')
 
-precio = soup.find("span",class_="price-tag-fraction")
+datos = {}
+datos["producto"] = soup.find("h1",class_="ui-pdp-title").get_text()
+datos["precio"] = soup.find("span",class_="price-tag-fraction").get_text()
+datos["diponibles"] = soup.find("span",class_="ui-pdp-buybox__quantity__available").get_text()
+datos["msi"] = soup.find("div",class_="ui-pdp-price__subtitles").get_text()
 
-print(precio.get_text())
+print(datos)
