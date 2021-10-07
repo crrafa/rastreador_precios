@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
+from datetime import datetime
 import requests
+import csv
 
 def rastrear(url):
     html =requests.get(url)
@@ -18,6 +20,12 @@ def imprimir(dicc):
         print(x,y)
     print("")
 
+def guarda_datos(dicc):
+    with open('productos.csv', 'a') as datos: 
+        linea = f'{dicc.get("producto")},"{dicc.get("precio")}",{dicc.get("diponibles")},{dicc.get("msi")},{datetime.today()} \n'
+        datos.write(linea)
+
 if __name__ == '__main__':
     laptop = rastrear("https://www.mercadolibre.com.mx/laptop-dell-inspiron-3505-gris-156-amd-ryzen-5-3450u-8gb-de-ram-256gb-ssd-amd-radeon-vega-8-60-hz-1366x768px-windows-10-home/p/MLM16537306?pdp_filters=category:MLM1652#searchVariation=MLM16537306&position=2&search_layout=stack&type=product&tracking_id=8defb765-9e97-4fe3-922a-be9e9b0fa052")
     imprimir(laptop)
+    guarda_datos(laptop)
